@@ -1,7 +1,5 @@
 #
-# system.prop for rider
+# system.prop for su640
 #
 service.adb.root=1
 persist.sys.usb.config=mass_storage,adb
-
-

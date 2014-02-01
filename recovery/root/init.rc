@@ -3,7 +3,6 @@ on early-init
 
 on init
     export PATH /sbin
-    export ANDROID_CACHE /cache
     export ANDROID_ROOT /system
     export ANDROID_DATA /data
     export EXTERNAL_STORAGE /sdcard
@@ -12,6 +11,7 @@ on init
 
     mkdir /boot
     mkdir /sdcard
+    mkdir /emmc
     mkdir /system
     mkdir /data
     mkdir /cache
@@ -25,31 +25,10 @@ on boot
 
     class_start default
 
-service rmt_storage /sbin/rmt_storage
-
 service ueventd /sbin/ueventd
     critical
 
-service choice_fn /sbin/choice_fn
-oneshot
-
 service recovery /sbin/recovery
-disabled
-
-service power_test /sbin/power_test
-disabled
-oneshot
-
-service offmode_charging /sbin/offmode_charging
-disabled
-oneshot
-
-service detect_key /sbin/detect_key
-disabled
-oneshot
-
-service htcbatt /sbin/htcbatt
-oneshot
 
 service adbd /sbin/adbd recovery
     disabled
@@ -57,8 +36,8 @@ service adbd /sbin/adbd recovery
 # USB google mode configuration
 on property:sys.usb.config=mass_storage,adb
     write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 0bb4
-    write /sys/class/android_usb/android0/idProduct 0c86
+    write /sys/class/android_usb/android0/idVendor 1004
+    write /sys/class/android_usb/android0/idProduct 61a6
     write /sys/class/android_usb/android0/functions $sys.usb.config
     write /sys/class/android_usb/android0/enable 1
     write /sys/class/android_usb/android0/iManufacturer $ro.product.manufacturer
